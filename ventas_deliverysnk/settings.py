@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+_ypx@lt84r%+j*4f5lh2o#n(r0*fc2n%t5ti1!iv#wfi!(*y7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -50,6 +51,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -85,9 +87,9 @@ WSGI_APPLICATION = 'ventas_deliverysnk.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'kmyzb6bdw566hp0e',
-        'USER': 'pfeep8qsl6qj8f3x',
-        'PASSWORD': 'xlfcrd7q8xd5t3ky',
+        'NAME': 'xn4699vck28zc3do',
+        'USER': 'nllircmqr18wfmit',
+        'PASSWORD': 'f6h1ppa3mkfl12d7',
         'HOST': 'lmag6s0zwmcswp5w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
         'PORT': '3306'
     }
@@ -136,6 +138,8 @@ STATICFILES_DIRS = [
 
 # Ruta para archivos estáticos recogidos de todas las aplicaciones
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# WhiteNoise configuration for serving static files in production
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Default primary key field type
