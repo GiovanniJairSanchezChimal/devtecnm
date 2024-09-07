@@ -1,0 +1,53 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Ingreso</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("{% static 'images/Delivery_perfil_01.png' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            color: white;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to bottom, rgba(247, 247, 247, 0.993), rgba(247, 247, 247, 0.904));
+            color: black;
+        }
+        .btn-custom {
+            background-color: black;
+            border-color: black;
+            color: #ffff; /* Cambia el color del texto si es necesario */
+        }
+
+        .btn-custom:hover {
+            background-color: #B0AEAD; /* Un par de tonos más oscuro */
+            border-color: #B0AEAD;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="text-center">Registrar Ingreso</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Registrar</button>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

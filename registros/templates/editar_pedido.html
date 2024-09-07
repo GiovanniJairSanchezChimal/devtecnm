@@ -1,0 +1,99 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Pedido</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("{% static 'images/Delivery_perfil_01.png' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            color: white;
+            background-attachment: fixed;
+
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to bottom, rgba(247, 247, 247, 0.993), rgba(247, 247, 247, 0.904));
+            color: black;
+        }
+        .btn-custom {
+            background-color: #B0AEAD;
+            border-color: #B0AEAD;
+            color: black; /* Cambia el color del texto si es necesario */
+        }
+
+        .btn-custom:hover {
+            background-color: black; /* Un par de tonos más oscuro */
+            border-color: black;
+            color: white;
+        }
+    </style>
+    <script>
+        function agregarProducto() {
+            var selectProducto = document.getElementById("productos");
+            var inputTalla = document.getElementById("talla");
+            var selectedProducto = selectProducto.options[selectProducto.selectedIndex];
+            var talla = inputTalla.value;
+            var listaProductos = document.getElementById("lista-productos");
+
+            var item = document.createElement("li");
+            item.textContent = selectedProducto.text + " - Talla: " + talla;
+            item.setAttribute("data-producto-id", selectedProducto.value);
+            item.setAttribute("data-talla", talla);
+
+            var deleteButton = document.createElement("button");
+            deleteButton.textContent = "Eliminar";
+            deleteButton.className = "btn btn-danger btn-sm ml-2";
+            deleteButton.onclick = function() {
+                listaProductos.removeChild(item);
+            };
+
+            item.appendChild(deleteButton);
+            listaProductos.appendChild(item);
+        }
+    </script>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="text-center">Editar Pedido</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="form-group">
+                <label for="productos">Productos</label>
+                <select class="form-control" id="productos" name="productos">
+                    {% for producto in productos %}
+                        <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="talla">Talla</label>
+                <input type="text" class="form-control" id="talla" name="tallas">
+                <button type="button" class="btn btn-secondary mt-2" onclick="agregarProducto()">Agregar Producto</button>
+            </div>
+            <div class="form-group">
+                <label for="lista-productos">Productos Seleccionados</label>
+                <ul id="lista-productos" class="list-group">
+                    <!-- Aquí se agregarán los productos seleccionados -->
+                </ul>
+            </div>
+            <button type="submit" class="btn btn-custom">Guardar Cambios</button>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

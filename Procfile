@@ -1,0 +1,1 @@
+web: gunicorn ventas_deliverysnk.wsgi

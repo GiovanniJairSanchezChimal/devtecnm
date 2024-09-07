@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Presupuestos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Lista de Presupuestos</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Categoría</th>
+                    <th>Monto</th>
+                    <th>Fecha de Inicio</th>
+                    <th>Fecha de Fin</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for presupuesto in presupuestos %}
+                <tr>
+                    <td>{{ presupuesto.id }}</td>
+                    <td>{{ presupuesto.categoria.nombre }}</td>
+                    <td>{{ presupuesto.monto }}</td>
+                    <td>{{ presupuesto.fecha_inicio|date:"d/m/Y" }}</td>
+                    <td>{{ presupuesto.fecha_fin|date:"d/m/Y" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

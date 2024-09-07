@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Ahorros</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Lista de Ahorros</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descripción</th>
+                    <th>Monto Objetivo</th>
+                    <th>Monto Actual</th>
+                    <th>Fecha de Inicio</th>
+                    <th>Fecha de Fin</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ahorro in ahorros %}
+                <tr>
+                    <td>{{ ahorro.id }}</td>
+                    <td>{{ ahorro.descripcion }}</td>
+                    <td>{{ ahorro.monto_objetivo }}</td>
+                    <td>{{ ahorro.monto_actual }}</td>
+                    <td>{{ ahorro.fecha_inicio|date:"d/m/Y" }}</td>
+                    <td>{{ ahorro.fecha_fin|date:"d/m/Y" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,240 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .btn-custom {
+        background-color: #B0AEAD;
+        border-color: #B0AEAD;
+        color: black; /* Cambia el color del texto si es necesario */
+    }
+
+    .btn-custom:hover {
+        background-color: black; /* Un par de tonos más oscuro */
+        border-color: black;
+        color: white;
+    }
+</style>
+<div class="container mt-5">
+    <h1>Reporte Mensual de Finanzas Personales</h1>
+
+    <!-- Formulario para seleccionar el mes -->
+    <form method="get" class="form-inline mb-3">
+        <label for="mes" class="mr-2">Seleccionar Mes:</label>
+        <input type="month" id="mes" name="mes" class="form-control mr-2" value="{{ inicio_mes|default_if_none:current_month }}">
+        <button type="submit" class="btn btn-custom">Ver Reporte</button>
+    </form>
+
+    <!-- Totales -->
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Total Ingresos</h3>
+            <p>${{ total_ingresos }}</p>
+        </div>
+        <div class="col-md-6">
+            <h3>Total Deudas</h3>
+            <p>${{ total_deudas }}</p>
+        </div>
+        <div class="col-md-6">
+            <h3>Total Gastos</h3>
+            <p>${{ total_gastos }}</p>
+        </div>
+        <div class="col-md-6">
+            <h3>Total Inversiones</h3>
+            <p>${{ total_inversiones }}</p>
+        </div>
+    </div>
+
+    <!-- Comparaciones -->
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Comparación: Ingresos vs Deudas</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ingresos</td>
+                        <td>${{ total_ingresos }}</td>
+                    </tr>
+                    <tr>
+                        <td>Deudas</td>
+                        <td>${{ total_deudas }}</td>
+                    </tr>
+                    <tr>
+                        <td>Utilidad Neta</td>
+                        <td>${{ utilidad_neta }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            <h3>Comparación: Gastos vs Inversiones</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Gastos</td>
+                        <td>${{ total_gastos }}</td>
+                    </tr>
+                    <tr>
+                        <td>Inversiones</td>
+                        <td>${{ total_inversiones }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Tablas de Datos -->
+    <!-- Tabla de Ingresos -->
+    <h3>Ingresos</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Fuente</th>
+                <th>Monto</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ingreso in ingresos %}
+            <tr>
+                <td>{{ ingreso.fuente }}</td>
+                <td>${{ ingreso.monto }}</td>
+                <td>{{ ingreso.fecha }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Tabla de Gastos -->
+    <h3>Gastos</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Descripción</th>
+                <th>Monto</th>
+                <th>Fecha</th>
+                <th>Categoría</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for gasto in gastos %}
+            <tr>
+                <td>{{ gasto.descripcion }}</td>
+                <td>${{ gasto.monto }}</td>
+                <td>{{ gasto.fecha }}</td>
+                <td>{{ gasto.categoria }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Tabla de Ahorros -->
+    <h3>Ahorros</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Descripción</th>
+                <th>Monto Actual</th>
+                <th>Monto Objetivo</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ahorro in ahorros %}
+            <tr>
+                <td>{{ ahorro.descripcion }}</td>
+                <td>${{ ahorro.monto_actual }}</td>
+                <td>${{ ahorro.monto_objetivo }}</td>
+                <td>{{ ahorro.fecha_inicio }}</td>
+                <td>{{ ahorro.fecha_fin }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Tabla de Inversiones -->
+    <h3>Inversiones</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Tipo</th>
+                <th>Descripción</th>
+                <th>Monto</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inversion in inversiones %}
+            <tr>
+                <td>{{ inversion.tipo }}</td>
+                <td>{{ inversion.descripcion }}</td>
+                <td>${{ inversion.monto }}</td>
+                <td>{{ inversion.fecha }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Tabla de Deudas -->
+    <h3>Deudas</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Descripción</th>
+                <th>Monto</th>
+                <th>Fecha</th>
+                <th>Fecha Vencimiento</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for deuda in deudas %}
+            <tr>
+                <td>{{ deuda.descripcion }}</td>
+                <td>${{ deuda.monto }}</td>
+                <td>{{ deuda.fecha }}</td>
+                <td>{{ deuda.fecha_vencimiento }}</td>
+                <td>{{ deuda.estado }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Tabla de Transacciones -->
+    <h3>Transacciones</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Descripción</th>
+                <th>Monto</th>
+                <th>Fecha</th>
+                <th>Categoría</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaccion in transacciones %}
+            <tr>
+                <td>{{ transaccion.descripcion }}</td>
+                <td>${{ transaccion.monto }}</td>
+                <td>{{ transaccion.fecha }}</td>
+                <td>{{ transaccion.categoria }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

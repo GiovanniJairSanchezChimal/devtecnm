@@ -1,0 +1,54 @@
+
+
+body{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+     rgba(0, 0, 0, 0.5)),
+     url("../images/Delivery_mda.png");
+    color: white;
+}
+
+.card.mx-auto{
+    background: linear-gradient(
+        to bottom,
+        rgba(60, 53, 50, 0.8) 0%, /* Color var(--van-dyke) con opacidad en la parte superior */
+        rgba(60, 53, 50, 0.2) 100% /* Color var(--van-dyke) con menor opacidad en la parte inferior */
+    );
+    color: white;
+}
+.card-body{
+    background: linear-gradient(
+        to bottom,
+        rgba(60, 53, 50, 0.8) 0%, /* Color var(--van-dyke) con opacidad en la parte superior */
+        rgba(60, 53, 50, 0.2) 100% /* Color var(--van-dyke) con menor opacidad en la parte inferior */
+    );
+    color: white;
+    border: white;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 0 #fff, 2px 2px 0 #ccc, 3px 3px 0 #bbb, 4px 4px 0 #aaa;
+
+}
+.card-title{
+    background: linear-gradient(
+        to bottom,
+        rgba(60, 53, 50, 0.8) 0%, /* Color var(--van-dyke) con opacidad en la parte superior */
+        rgba(60, 53, 50, 0.2) 100% /* Color var(--van-dyke) con menor opacidad en la parte inferior */
+    );
+    color: white;
+}
+.card-link{
+    color: white;
+}
+.card-link:hover{
+    color: #e9e8e2;
+}
+.btn.btn-sm.btn-primary.float-end{
+    background-color: #f5f4ef;
+    color: black;
+}
+.btn.btn-sm.btn-primary.float-end:hover{
+    background-color: transparent;
+    color: #f7f6ef;
+}
+h3{
+    text-align: center;
+}

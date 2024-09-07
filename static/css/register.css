@@ -1,0 +1,36 @@
+body{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+     rgba(0, 0, 0, 0.5)),
+     url("../images/Delivery_mda.png");
+    color: white;
+}
+.card.mx-auto{
+    background: linear-gradient(
+        to bottom,
+        rgba(60, 53, 50, 0.8) 0%, /* Color var(--van-dyke) con opacidad en la parte superior */
+        rgba(60, 53, 50, 0.2) 100% /* Color var(--van-dyke) con menor opacidad en la parte inferior */
+    );
+    color: white;
+}
+.card-body{
+    color: white;
+}
+.card-link{
+    color: white;
+}
+
+.card-link:hover{
+    color: #e9e8e4;
+}
+.btn.btn-sm.btn-primary{
+    background-color: #e0e0db;
+    color: black;
+    border: 2px solid #dddcd7;
+}
+.btn.btn-sm.btn-primary:hover{
+    background-color: transparent;
+    color: #eeeeec;
+}
+h3{
+    text-align: center;
+}

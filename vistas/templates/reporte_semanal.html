@@ -1,0 +1,86 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte Semanal</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("{% static 'images/Delivery_perfil_01.png' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            color: white;
+            background-attachment: fixed;
+        }
+        .form-container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to bottom, rgba(247, 247, 247, 0.993), rgba(247, 247, 247, 0.904));
+            color: black;
+        }
+        .clickable-row {
+            cursor: pointer;
+        }
+        .btn-custom {
+            background-color: #B0AEAD;
+            border-color: #B0AEAD;
+            color: black;
+        }
+
+        .btn-custom:hover {
+            background-color: black;
+            border-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="text-center">Reporte Semanal</h1>
+        <form method="get" class="form-inline mb-3">
+            <label for="semana" class="mr-2">Seleccionar Semana:</label>
+            <input type="week" id="semana" name="semana" class="form-control mr-2" value="{{ inicio_semana|date:"Y-\WW" }}">
+            <button type="submit" class="btn btn-custom">Ver Reporte</button>
+        </form>
+        <h2 class="text-center">Semana del {{ inicio_semana|date:"d/m/Y" }} al {{ fin_semana|date:"d/m/Y" }}</h2>
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio de Compra</th>
+                    <th>Precio de Venta</th>
+                    <th>Ganancia</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pedido in pedidos %}
+                    {% for producto in pedido.productos.all %}
+                    <tr>
+                        <td>{{ producto.nombre }}</td>
+                        <td>${{ producto.precio_compra }}</td>
+                        <td>${{ producto.precio_venta }}</td>
+                        <td>${{ producto.ganancia }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            <h3>Gasto Total de Compra: ${{ gasto_compra }}</h3>
+            <h3>Venta Total: ${{ venta_total }}</h3>
+            <h3>Ganancia Recibida: ${{ ganancia_recibida }}</h3>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'navbar.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("{% static 'images/Delivery_perfil_01.png' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            color: white;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to bottom, rgba(247, 247, 247, 0.993), rgba(247, 247, 247, 0.904));
+            color: black;
+        }
+        .btn-custom {
+            background-color: black;
+            border-color: black;
+            color: #ffff;
+        }
+        .btn-custom:hover {
+            background-color: #B0AEAD;
+            border-color: #B0AEAD;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="text-center">Iniciar Sesión</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <h5 class="card-title">Ingrese sus Credenciales</h5>
+                {{ form | crispy }}
+            </div>
+            
+            <div class="text-center mt-3">
+                <button class="btn btn-custom" type="submit">Iniciar Sesión</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte Mensual</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("{% static 'images/Delivery_perfil_01.png' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            color: white;
+            background-attachment: fixed;
+        }
+        .form-container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to bottom, rgba(247, 247, 247, 0.993), rgba(247, 247, 247, 0.904));
+            color: black;
+        }
+        .clickable-row {
+            cursor: pointer;
+        }
+        .btn-custom {
+            background-color: #B0AEAD;
+            border-color: #B0AEAD;
+            color: black;
+        }
+
+        .btn-custom:hover {
+            background-color: black;
+            border-color: black;
+            color: white;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var rows = document.querySelectorAll(".clickable-row");
+            rows.forEach(function(row) {
+                row.addEventListener("click", function() {
+                    window.location.href = row.dataset.href;
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="text-center">Reporte Mensual</h1>
+        <form method="get" class="form-inline mb-3">
+            <label for="mes" class="mr-2">Seleccionar Mes:</label>
+            <input type="month" id="mes" name="mes" class="form-control mr-2" value="{{ inicio_mes|date:"Y-m" }}">
+            <button type="submit" class="btn btn-custom">Ver Reporte</button>
+        </form>
+        <h2 class="text-center">Mes de {{ inicio_mes|date:"F Y" }}</h2>
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio de Compra</th>
+                    <th>Precio de Venta</th>
+                    <th>Ganancia</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pedido in pedidos %}
+                    {% for producto in pedido.productos.all %}
+                    <tr>
+                        <td>{{ producto.nombre }}</td>
+                        <td>${{ producto.precio_compra }}</td>
+                        <td>${{ producto.precio_venta }}</td>
+                        <td>${{ producto.ganancia }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            <h3>Gasto Total de Compra: ${{ gasto_compra }}</h3>
+            <h3>Venta Total: ${{ venta_total }}</h3>
+            <h3>Ganancia Recibida: ${{ ganancia_recibida }}</h3>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

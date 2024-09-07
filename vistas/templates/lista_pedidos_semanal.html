@@ -1,0 +1,104 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedidos Semanales</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("{% static 'images/Delivery_perfil_01.png' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            color: white;
+            background-attachment: fixed;
+
+        }
+        .form-container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to bottom, rgba(247, 247, 247, 0.993), rgba(247, 247, 247, 0.904));
+            color: black;
+        }
+        .clickable-row {
+            cursor: pointer;
+        }
+        .btn-custom {
+            background-color: #B0AEAD;
+            border-color: #B0AEAD;
+            color: black;
+        }
+
+        .btn-custom:hover {
+            background-color: black;
+            border-color: black;
+            color: white;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var rows = document.querySelectorAll(".clickable-row");
+            rows.forEach(function(row) {
+                row.addEventListener("click", function() {
+                    window.location.href = row.dataset.href;
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="text-center">Pedidos Semanales</h1>
+        <form method="get" class="form-inline mb-3">
+            <label for="semana" class="mr-2">Seleccionar Semana:</label>
+            <input type="week" id="semana" name="semana" class="form-control mr-2" value="{{ inicio_semana|date:"Y-\WW" }}">
+            <button type="submit" class="btn btn-custom">Ver Pedidos</button>
+        </form>
+        <h2>Semana del {{ inicio_semana|date:"d/m/Y" }} al {{ fin_semana|date:"d/m/Y" }}</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID del Pedido</th>
+                    <th>Cliente</th>
+                    <th>Fecha de Realización</th>
+                    <th>Productos</th>
+                    <th>Deuda Restante</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in pedidos_con_deuda %}
+                <tr class="clickable-row" data-href="{% url 'detalle_pedido' item.pedido.id %}">
+                    <td>{{ item.pedido.id }}</td>
+                    <td>{{ item.pedido.cliente }}</td>
+                    <td>{{ item.pedido.fecha_realizacion|date:"d/m/Y" }}</td>
+                    <td>
+                        <ul>
+                            {% for producto in item.pedido.productos.all %}
+                            <li>{{ producto.nombre }} - ${{ producto.precio_venta }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        {% if item.deuda_restante <= 0 %}
+                            <strong>Pagado</strong>
+                        {% else %}
+                            ${{ item.deuda_restante }}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}
