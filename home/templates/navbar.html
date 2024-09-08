@@ -10,114 +10,157 @@
  
 
     <style>
-           .navbar {
-            background-color: #FFFFFF; /* Fondo blanco */
-        }
-
-        .navbar-brand, .nav-link {
-            color: #000000 !important; /* Texto negro */
-        }
-
-        .navbar-brand:hover, .nav-link:hover {
-            color: #D0CECD !important; /* Cambiar el color del texto al pasar el mouse a dorado */
-        }
-
-        .navbar-toggler {
-            background-color: #FFFFFF; /* Cambiar el color de fondo del botón a blanco */
-            border-color: #FFFFFF; /* Cambiar el color del borde a blanco */
-        }
-
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%280, 0, 0, 1%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"); /* Cambiar el color de las líneas a negro */
-        }
-
-        .responsive-img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .icono {
-            width: 24px; /* Ajusta el tamaño según sea necesario */
-            height: 24px; /* Ajusta el tamaño según sea necesario */
-            transition: transform 0.3s ease, opacity 0.3s ease; /* Agrega una transición suave */
-        }
-
-        @media (max-width: 768px) {
-            .icono {
-                width: 20px;
-                height: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .icono {
-                width: 16px;
-                height: 16px;
-            }
-        }
-
-        .icono:hover {
-            transform: scale(1.1); /* Aumenta el tamaño del icono en un 10% al pasar el cursor sobre él */
-            opacity: 0.8; /* Reduce la opacidad para dar un efecto visual adicional */
-        }
-
-        .user {
-            color: #000000;
-        }
-
-        .nav {
-            display: flex;
-            justify-content: center; /* Centra los elementos en la barra de navegación */
-            align-items: center; /* Centra verticalmente los elementos si es necesario */
-        }
-
-        .nav-link {
-            background: transparent;
-            border: none;
-            padding: 0;
-            margin: 0;
-            cursor: pointer;
-            color: inherit;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center; /* Alinea verticalmente el contenido */
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            text-align: center;
-        }
-
-        .user-info li {
-            margin: 0;
-            padding: 0;
-        }
-
-        .user-icon {
-            margin-bottom: 0; /* Ajusta el margen para evitar espacio innecesario */
-            margin-right: 10px; /* Añade espacio entre el icono y el nombre del usuario */
-        }
-
-        .user-icon svg {
-            vertical-align: middle;
-            display: inline-block; /* Asegura que el SVG se muestre en línea */
-        }
-
-        .user-name {
-            font-size: 16px;
-        }
-
-        @media (max-width: 576px) {
-            .navbar-brand {
-                font-size: 14px; /* Ajusta el tamaño del texto de la marca */
-            }
-            
-            .nav-link {
-                font-size: 12px; /* Ajusta el tamaño del texto de los enlaces */
-            }
-        }
+      .navbar {
+          background-color: #FFFFFF; /* Fondo blanco */
+          padding: 1rem; /* Padding por defecto */
+      }
+  
+      .navbar-brand, .nav-link {
+          color: #000000 !important; /* Texto negro */
+      }
+  
+      .navbar-brand:hover, .nav-link:hover {
+          color: #D0CECD !important; /* Cambiar el color del texto al pasar el mouse a dorado */
+      }
+  
+      .navbar-toggler {
+          background-color: #FFFFFF; /* Cambiar el color de fondo del botón a blanco */
+          border-color: #FFFFFF; /* Cambiar el color del borde a blanco */
+      }
+  
+      .navbar-toggler-icon {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%280, 0, 0, 1%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"); /* Cambiar el color de las líneas a negro */
+      }
+  
+      .responsive-img {
+          max-width: 100%;
+          height: auto;
+      }
+  
+      .navbar img {
+          max-width: 100px; /* Tamaño máximo en pantallas grandes */
+          height: auto;
+      }
+  
+      @media (max-width: 768px) {
+          .navbar img {
+              max-width: 200px; /* Tamaño máximo en pantallas medianas (tabletas) */
+          }
+  
+          .navbar {
+              padding: 1.5rem; /* Padding más grande en dispositivos móviles */
+          }
+  
+          .navbar-brand {
+              font-size: 1.25rem; /* Tamaño de fuente más grande */
+          }
+  
+          .nav-link {
+              font-size: 1.125rem; /* Tamaño de fuente más grande para enlaces */
+          }
+      }
+  
+      @media (max-width: 480px) {
+          .navbar img {
+              max-width: 200px; /* Tamaño máximo en pantallas pequeñas (teléfonos) */
+          }
+  
+          .navbar {
+              padding: 2rem; /* Padding aún más grande en dispositivos muy pequeños */
+          }
+  
+          .navbar-brand {
+              font-size: 1.5rem; /* Tamaño de fuente aún más grande */
+          }
+  
+          .nav-link {
+              font-size: 1.25rem; /* Tamaño de fuente aún más grande para enlaces */
+          }
+      }
+  
+      .icono {
+          width: 24px; /* Ajusta el tamaño según sea necesario */
+          height: 24px; /* Ajusta el tamaño según sea necesario */
+          transition: transform 0.3s ease, opacity 0.3s ease; /* Agrega una transición suave */
+      }
+  
+      @media (max-width: 768px) {
+          .icono {
+              width: 20px;
+              height: 20px;
+          }
+      }
+  
+      @media (max-width: 480px) {
+          .icono {
+              width: 16px;
+              height: 16px;
+          }
+      }
+  
+      .icono:hover {
+          transform: scale(1.1); /* Aumenta el tamaño del icono en un 10% al pasar el cursor sobre él */
+          opacity: 0.8; /* Reduce la opacidad para dar un efecto visual adicional */
+      }
+  
+      .user {
+          color: #000000;
+      }
+  
+      .nav {
+          display: flex;
+          justify-content: center; /* Centra los elementos en la barra de navegación */
+          align-items: center; /* Centra verticalmente los elementos si es necesario */
+      }
+  
+      .nav-link {
+          background: transparent;
+          border: none;
+          padding: 0;
+          margin: 0;
+          cursor: pointer;
+          color: inherit;
+      }
+  
+      .user-info {
+          display: flex;
+          align-items: center; /* Alinea verticalmente el contenido */
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          text-align: center;
+      }
+  
+      .user-info li {
+          margin: 0;
+          padding: 0;
+      }
+  
+      .user-icon {
+          margin-bottom: 0; /* Ajusta el margen para evitar espacio innecesario */
+          margin-right: 10px; /* Añade espacio entre el icono y el nombre del usuario */
+      }
+  
+      .user-icon svg {
+          vertical-align: middle;
+          display: inline-block; /* Asegura que el SVG se muestre en línea */
+      }
+  
+      .user-name {
+          font-size: 16px;
+      }
+  
+      @media (max-width: 576px) {
+          .navbar-brand {
+              font-size: 14px; /* Ajusta el tamaño del texto de la marca */
+          }
+          
+          .nav-link {
+              font-size: 12px; /* Ajusta el tamaño del texto de los enlaces */
+          }
+      }
   </style>
+  
   
 </head>
 <body>
