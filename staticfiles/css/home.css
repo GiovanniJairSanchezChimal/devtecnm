@@ -1,0 +1,101 @@
+
+:root {
+    --jet: #343332; /* Gris oscuro */
+    --chamoisee: #AA8066; /* Café amaderado claro */
+    --lion: #BB9F87; /* Café amaderado claro */
+    --brown-sugar: #A36850; /* Café amaderado medio */
+    --van-dyke: #3C3532; /* Café amaderado oscuro */
+    --white-smoke: #F5F3F1; /* Gris muy claro */
+    --khaki: #C1B4A6; /* Café amaderado claro */
+    --jet-2: #2F2F30; /* Gris oscuro adicional */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+     rgba(0, 0, 0, 0.5)),
+     url("../images/madera.jpeg");
+    color: var(--white-smoke); /* Gris muy claro */
+}
+
+.hero {
+    background-image: 
+        linear-gradient(
+            rgba(0, 0, 0, 0.5), 
+            rgba(0, 0, 0, 0.5)
+        ), 
+        url("../images/barber_fondo.png");
+    color: white;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 15px; /* Bordes redondeados */
+    overflow: hidden; /* Oculta el desbordamiento causado por los bordes redondeados */
+}
+
+.section {
+    padding: 4rem 0;
+    border-radius: 15px; /* Bordes redondeados */
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.8) 0%, /* Color blanco con opacidad en la parte superior */
+        rgba(255, 255, 255, 0.2) 100% /* Color blanco con menor opacidad en la parte inferior */
+    );
+}
+
+.services {
+    background: linear-gradient(
+        to bottom,
+        rgba(170, 128, 102, 0.8) 0%, /* Color var(--chamoisee) con opacidad en la parte superior */
+        rgba(170, 128, 102, 0.2) 100% /* Color var(--chamoisee) con menor opacidad en la parte inferior */
+    );
+    border-radius: 15px; /* Bordes redondeados */
+}
+
+.location {
+    background: linear-gradient(
+        to bottom,
+        rgba(60, 53, 50, 0.8) 0%, /* Color var(--van-dyke) con opacidad en la parte superior */
+        rgba(60, 53, 50, 0.2) 100% /* Color var(--van-dyke) con menor opacidad en la parte inferior */
+    );
+    color: var(--white-smoke); /* Gris muy claro */
+    border-radius: 15px; /* Bordes redondeados */
+}
+
+.appointments {
+    background: linear-gradient(
+        to bottom,
+        rgba(193, 180, 166, 0.8) 0%, /* Color var(--khaki) con opacidad en la parte superior */
+        rgba(193, 180, 166, 0.2) 100% /* Color var(--khaki) con menor opacidad en la parte inferior */
+    );
+    border-radius: 15px; /* Bordes redondeados */
+}
+
+footer {
+    background-color: var(--jet); /* Gris oscuro */
+    color: var(--white-smoke); /* Gris muy claro */
+    padding: 1rem 0;
+    text-align: center;
+    border-radius: 15px; /* Bordes redondeados */
+}
+
+.btn-primary {
+    background-color: var(--brown-sugar); /* Café amaderado medio */
+    border-color: var(--brown-sugar); /* Café amaderado medio */
+}
+
+.btn-primary:hover {
+    background-color: var(--jet-2); /* Gris oscuro adicional */
+    border-color: var(--jet-2); /* Gris oscuro adicional */
+}
+.services img {
+    max-width: 100%; /* Asegura que la imagen no se desborde del contenedor */
+    height: auto; /* Mantiene la relación de aspecto de la imagen */
+    margin-top: 1rem; /* Espacio superior entre el texto y la imagen */
+    border-radius: 10px; /* Bordes redondeados en las imágenes */
+}

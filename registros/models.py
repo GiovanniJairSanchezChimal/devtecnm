@@ -35,7 +35,7 @@ class Producto(models.Model):
         return self.nombre
     
 class Talla(models.Model):
-    talla = models.DecimalField(max_digits=4, decimal_places=1)
+    talla = models.CharField(max_length=5)
 
     def __str__(self):
         return f"Talla: {self.talla}"
