@@ -16,4 +16,7 @@ urlpatterns=[
    path('clientes/', views.lista_clientes, name='lista_clientes'),
    path('clientes/editar/<int:cliente_id>/', views.editar_cliente, name='editar_cliente'),
    path('clientes/eliminar/<int:cliente_id>/', views.eliminar_cliente, name='eliminar_cliente'),
+   path('categorias/', views.lista_categorias, name='lista_categorias'),
+   path('categorias/editar/<int:categoria_id>/', views.editar_categoria, name='editar_categoria'),
+   path('categoria/eliminar/<int:categoria_id>/', views.eliminar_categoria, name='eliminar_categoria'),
 ]

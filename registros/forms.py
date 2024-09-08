@@ -43,3 +43,6 @@ class PedidoProductoForm(forms.ModelForm):
     class Meta:
         model = PedidoProducto
         fields = ['producto', 'talla']
+        widgets = {
+            'talla': forms.TextInput(attrs={'placeholder': 'Ingrese la talla'}),
+        }

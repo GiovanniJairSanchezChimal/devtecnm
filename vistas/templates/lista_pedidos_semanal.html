@@ -67,7 +67,6 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>ID del Pedido</th>
                     <th>Cliente</th>
                     <th>Fecha de Realización</th>
                     <th>Productos</th>
@@ -77,7 +76,6 @@
             <tbody>
                 {% for item in pedidos_con_deuda %}
                 <tr class="clickable-row" data-href="{% url 'detalle_pedido' item.pedido.id %}">
-                    <td>{{ item.pedido.id }}</td>
                     <td>{{ item.pedido.cliente }}</td>
                     <td>{{ item.pedido.fecha_realizacion|date:"d/m/Y" }}</td>
                     <td>

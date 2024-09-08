@@ -6,7 +6,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Pedido</title>
+    <title>Editar Categoría</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -31,10 +31,10 @@
         .btn-custom {
             background-color: #B0AEAD;
             border-color: #B0AEAD;
-            color: black;
+            color: black; /* Cambia el color del texto si es necesario */
         }
         .btn-custom:hover {
-            background-color: black;
+            background-color: black; /* Un par de tonos más oscuro */
             border-color: black;
             color: white;
         }
@@ -42,47 +42,13 @@
 </head>
 <body>
     <div class="form-container">
-        <h1 class="text-center">Editar Pedido</h1>
+        <h1 class="text-center">Editar Categoría</h1>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            
-            <h3>Productos del Pedido</h3>
-            {{ formset.management_form }}
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th>Talla</th>
-                        <th>Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for form in formset %}
-                    <tr>
-                        <td>{{ form.producto }}</td>
-                        <td>{{ form.talla }}</td>
-                        <td>
-                            {% if form.instance.pk %}
-                                <button type="button" class="btn btn-danger btn-sm" onclick="removeForm(this)">Eliminar</button>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-
             <button type="submit" class="btn btn-custom">Guardar Cambios</button>
         </form>
     </div>
-
-    <script>
-        function removeForm(button) {
-            var row = button.closest('tr');
-            row.querySelector('input[name$="-DELETE"]').value = 'on';  // Mark the form for deletion
-            row.style.display = 'none';  // Hide the row
-        }
-    </script>
 </body>
 </html>
 {% endblock %}

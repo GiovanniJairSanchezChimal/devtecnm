@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from registros.models import Pedido, Abono, Producto, Cliente, PedidoProducto, Talla
+from registros.models import Pedido, Abono, Producto, Cliente, PedidoProducto, Talla, Categorias
 from django.db.models import Sum, F
 from datetime import datetime, timedelta
-from registros.forms import PedidoForm, ProductoForm, ClienteForm, PedidoProductoForm
+from registros.forms import PedidoForm, ProductoForm, ClienteForm, PedidoProductoForm, CategoriaForm
 from django.forms import inlineformset_factory
 from django.contrib.auth.decorators import login_required, user_passes_test
 
@@ -38,18 +38,11 @@ def editar_pedido(request, pedido_id):
         form = PedidoForm(request.POST, instance=pedido)
         formset = PedidoProductoFormSet(request.POST, instance=pedido)
         if form.is_valid() and formset.is_valid():
+            # Guardar los cambios en el pedido
             form.save()
+
+            # Guardar los cambios en los productos y tallas
             formset.save()
-
-            # Procesar productos y tallas manualmente
-            productos_data = request.POST.getlist('productos')
-            tallas_data = request.POST.getlist('tallas')
-            pedido.pedido_productos.all().delete()  # Eliminar productos existentes
-
-            for producto_id, talla in zip(productos_data, tallas_data):
-                producto = get_object_or_404(Producto, id=producto_id)
-                talla_obj, created = Talla.objects.get_or_create(talla=talla)
-                PedidoProducto.objects.create(pedido=pedido, producto=producto, talla=talla_obj)
 
             return redirect('detalle_pedido', pedido_id=pedido.id)
     else:
@@ -59,8 +52,6 @@ def editar_pedido(request, pedido_id):
     productos = Producto.objects.all()
 
     return render(request, 'editar_pedido.html', {'form': form, 'formset': formset, 'productos': productos})
-
-
 @login_required
 @user_passes_test(is_superuser)
 def eliminar_pedido(request, pedido_id):
@@ -244,3 +235,32 @@ def eliminar_cliente(request, cliente_id):
         cliente.delete()
         return redirect('lista_clientes')
     return render(request, 'confirmar_eliminar_cliente.html', {'cliente': cliente})
+
+
+def lista_categorias(request):
+    categorias = Categorias.objects.all()
+    context = {
+        'categorias': categorias,
+    }
+    return render(request, 'lista_categorias.html', context)
+
+
+def editar_categoria(request, categoria_id):
+    categoria = get_object_or_404(Categorias, id=categoria_id)
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST, instance=categoria)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_categorias')
+    else:
+        form = CategoriaForm(instance=categoria)
+    return render(request, 'editar_categoria.html', {'form': form})
+
+@login_required
+@user_passes_test(is_superuser)
+def eliminar_categoria(request, categoria_id):
+    categoria = get_object_or_404(Categorias, id=categoria_id)
+    if request.method == 'POST':
+        categoria.delete()
+        return redirect('lista_categorias')
+    return render(request, 'confirmar_eliminar_categoria.html', {'categoria': categoria})
