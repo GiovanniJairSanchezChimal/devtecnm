@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <title>Formulario de Pedido</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <style>
         body {
             background-image: url("{% static 'images/Delivery_perfil_01.png' %}");
@@ -17,7 +18,6 @@
             height: 100vh;
             color: white;
             background-attachment: fixed;
-
         }
         .form-container {
             max-width: 600px;
@@ -38,8 +38,33 @@
             background-color: #B0AEAD;
             border-color: #B0AEAD;
         }
+        /* Estilo personalizado para Select2 */
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: black; /* Color del texto en el campo de selección */
+        }
+        .select2-container--default .select2-results__option {
+            color: black; /* Color del texto en las opciones desplegables */
+        }
+        .select2-container--default .select2-results__option--highlighted {
+            background-color: #f0f0f0; /* Color de fondo para opción resaltada */
+            color: black; /* Color del texto en opción resaltada */
+        }
     </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script>
+        $(document).ready(function() {
+            $('#id_cliente').select2({
+                placeholder: "Selecciona un cliente",
+                allowClear: true
+            });
+
+            $('#productos').select2({
+                placeholder: "Selecciona un producto",
+                allowClear: true
+            });
+        });
+
         function agregarProducto() {
             var selectProducto = document.getElementById("productos");
             var inputTalla = document.getElementById("talla");
@@ -96,6 +121,7 @@
                 <input type="text" class="form-control" id="talla" name="talla">
                 <button type="button" class="btn btn-secondary mt-2" onclick="agregarProducto()">Agregar Producto</button>
             </div>
+            
             <div class="form-group">
                 <label for="lista-productos">Productos Seleccionados</label>
                 <ul id="lista-productos" class="list-group">

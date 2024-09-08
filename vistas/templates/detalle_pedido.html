@@ -17,7 +17,6 @@
             height: 100vh;
             color: white;
             background-attachment: fixed;
-
         }
         .form-container {
             max-width: 800px;
@@ -32,20 +31,23 @@
         .btn-custom {
             background-color: #B0AEAD;
             border-color: #B0AEAD;
-            color: black; /* Cambia el color del texto si es necesario */
+            color: black;
         }
-
         .btn-custom:hover {
-            background-color: black; /* Un par de tonos más oscuro */
+            background-color: black;
             border-color: black;
             color: white;
+        }
+        .table-container {
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <div class="form-container">
         <h1 class="text-center">Detalle del Pedido</h1>
-        <h2>Cliente: {{ pedido.cliente }}</h2>
+        <a><strong>Cliente:</strong> {{ pedido.cliente }}</a>
+
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -59,18 +61,39 @@
                 <tr>
                     <td>{{ pedido_producto.producto.nombre }}</td>
                     <td>{{ pedido_producto.talla.talla }}</td>
-                    <td>{{ pedido_producto.producto.precio_venta }}</td>
+                    <td>${{ pedido_producto.producto.precio_venta }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Enganche</th>
+                        <td>${{ pedido.enganche }}</td>
+                    </tr>
+                    <tr>
+                        <th>Deuda Total</th>
+                        <td>${{ total_deuda }}</td>
+                    </tr>
+                    <tr>
+                        <th>Total Abonado</th>
+                        <td>${{ total_abonos }}</td>
+                    </tr>
+                    <tr>
+                        <th>Deuda Restante</th>
+                        <td>${{ deuda_restante }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
         <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <h3>Enganche: ${{ pedido.enganche }}</h3>
-                <h3>Deuda Total: ${{ total_deuda }}</h3>
-                <h3>Total Abonado: ${{ total_abonos }}</h3>
-                <h3>Deuda Restante: ${{ deuda_restante }}</h3>
-            </div>
             <div>
                 <a href="{% url 'editar_pedido' pedido.id %}" class="btn btn-warning">Editar Pedido</a>
                 <a href="{% url 'eliminar_pedido' pedido.id %}" class="btn btn-danger">Eliminar Pedido</a>

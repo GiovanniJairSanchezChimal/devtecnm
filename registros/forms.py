@@ -1,5 +1,6 @@
 from django import forms
 from .models import Producto, Cliente, Pedido, Categorias, Talla, PedidoProducto
+from django_select2.forms import Select2Widget
 
 
 class ClienteForm(forms.ModelForm):
@@ -34,6 +35,9 @@ class PedidoForm(forms.ModelForm):
     class Meta:
         model = Pedido
         fields = ['cliente', 'enganche']
+        widgets = {
+            'cliente': Select2Widget,
+        }
 
 class PedidoProductoForm(forms.ModelForm):
     class Meta:

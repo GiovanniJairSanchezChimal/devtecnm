@@ -64,7 +64,6 @@ def crear_pedido(request):
     return render(request, 'crear_pedido.html', {'form': form, 'productos': productos})
 
 
-
 @login_required
 @user_passes_test(is_superuser)
 def registro_categoria(request):
