@@ -3,7 +3,7 @@ from .forms import ProductoForm, ClienteForm, PedidoForm, CategoriaForm, PedidoP
 from .models import Producto, PedidoProducto, Talla
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
-
+from django.http import JsonResponse
 def is_superuser(user):
     return user.is_superuser
 
@@ -13,9 +13,14 @@ def registro_productos(request):
         form = ProductoForm(request.POST)
         if form.is_valid():
             form.save()
+            # Si es una solicitud AJAX, responder con JSON
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'message': 'Producto registrado.'}, status=200)
+            # Si no es AJAX, redirigir como de costumbre
             return redirect('registro_productos')
     else:
         form = ProductoForm()
+    
     return render(request, 'registro_productos.html', {'form': form})
 
 
@@ -26,11 +31,15 @@ def registro_clientes(request):
         form = ClienteForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('registro_clientes')  # Asegúrate de tener una vista y URL para listar clientes
+            # Si es una solicitud AJAX, responder con JSON
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'message': 'Cliente registrado.'}, status=200)
+            # Si no es AJAX, redirigir como de costumbre
+            return redirect('registro_cliente')
     else:
         form = ClienteForm()
-    return render(request, 'registro_clientes.html', {'form': form})
 
+    return render(request, 'registro_clientes.html', {'form': form})
 
 @login_required
 @user_passes_test(is_superuser)
@@ -71,7 +80,14 @@ def registro_categoria(request):
         form = CategoriaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('registro_categoria')  # Asegúrate de tener una vista y URL para listar categorías
+
+            # Si es una solicitud AJAX, responder con JSON
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'message': 'Categoría registrada.'}, status=200)
+
+            # Si no es AJAX, redirigir como de costumbre
+            return redirect('registro_categoria')
     else:
         form = CategoriaForm()
+
     return render(request, 'registro_categoria.html', {'form': form})

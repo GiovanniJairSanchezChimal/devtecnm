@@ -17,7 +17,6 @@
             height: 100vh;
             color: white;
             background-attachment: fixed;
-
         }
         .form-container {
             max-width: 600px;
@@ -32,25 +31,79 @@
         .btn-custom {
             background-color: #B0AEAD;
             border-color: #B0AEAD;
-            color: black; /* Cambia el color del texto si es necesario */
+            color: black;
         }
-
         .btn-custom:hover {
-            background-color: black; /* Un par de tonos más oscuro */
+            background-color: black;
             border-color: black;
             color: white;
+        }
+        .alert {
+            display: none;
         }
     </style>
 </head>
 <body>
     <div class="form-container">
         <h1 class="text-center">Categoría</h1>
-        <form method="post">
+
+        <!-- Alerta de éxito -->
+        <div id="successMessage" class="alert alert-success" role="alert">
+            Categoría registrada.
+        </div>
+
+        <!-- Formulario -->
+        <form id="categoriaForm" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="btn btn-custom">Guardar</button>
         </form>
     </div>
+
+    <!-- JavaScript para manejar AJAX -->
+    <script>
+        document.getElementById('categoriaForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evitar el envío normal del formulario
+
+            var form = this;
+            var formData = new FormData(form);
+
+            // Enviar el formulario usando fetch
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'  // Marcar como una solicitud AJAX
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    // Mostrar el mensaje de éxito
+                    var successMessage = document.getElementById('successMessage');
+                    successMessage.style.display = 'block';
+                    successMessage.innerText = data.message;
+
+                    // Limpiar el formulario después de guardar
+                    form.reset();
+                } else if (data.error) {
+                    console.error('Error:', data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error en la solicitud:', error);
+            });
+        });
+
+        // Función para ocultar el mensaje de éxito al interactuar con el formulario
+        var formFields = document.querySelectorAll('#categoriaForm input, #categoriaForm select, #categoriaForm textarea');
+        formFields.forEach(function(field) {
+            field.addEventListener('focus', function() {
+                var successMessage = document.getElementById('successMessage');
+                successMessage.style.display = 'none';
+            });
+        });
+    </script>
 </body>
 </html>
 {% endblock %}
