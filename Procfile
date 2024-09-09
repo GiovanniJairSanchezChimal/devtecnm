@@ -1,1 +1,1 @@
-web: gunicorn ventas_deliverysnk.wsgi
+web: gunicorn ventas_deliverysnk.wsgi:application
