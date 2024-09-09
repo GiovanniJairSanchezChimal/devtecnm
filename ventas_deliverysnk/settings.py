@@ -85,7 +85,20 @@ WSGI_APPLICATION = 'ventas_deliverysnk.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
 DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dbprueba_vjot',
+        'USER': 'giovanni117',
+        'PASSWORD': '2LvHSzcDQtmUoI0pRLNitRzHfnItnB6B',
+        'HOST': 'dpg-crd2u4rqf0us73arl730-a.oregon-postgres.render.com',  # o la IP si es una base de datos remota
+        'PORT': '5432',  # Puerto predeterminado de PostgreSQL
+    }
+}
+
+
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'xn4699vck28zc3do',
@@ -95,7 +108,7 @@ DATABASES = {
         'PORT': '3306'
     }
 }
-
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
