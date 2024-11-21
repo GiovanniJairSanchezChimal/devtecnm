@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: deliverysnk_container
+    command: gunicorn --bind 0.0.0.0:8000 ventas_deliverysnk.wsgi:application
+    ports:
+      - "8000:8000"
+    environment:
+      - NOMBRE_BASE_DATOS=giovanni117
+      - USUARIO_BASE_DATOS=giovanni117_user
+      - CONTRASEÑA_BASE_DATOS=QtD5Q5LptNc6npc5Een9lcsN1xyu8xGY
+      - HOST_BASE_DATOS=dpg-crpq6al6l47c73anisl0-a.oregon-postgres.render.com
+      - DATABASE_PORT=5432

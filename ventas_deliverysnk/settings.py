@@ -89,13 +89,14 @@ WSGI_APPLICATION = 'ventas_deliverysnk.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'giovanni117',
-        'USER': 'giovanni117_user',
-        'PASSWORD': 'QtD5Q5LptNc6npc5Een9lcsN1xyu8xGY',
-        'HOST': 'dpg-crpq6al6l47c73anisl0-a.oregon-postgres.render.com',  # o la IP si es una base de datos remota
-        'PORT': '5432',  # Puerto predeterminado de PostgreSQL
+        'NAME': os.environ.get('NOMBRE_BASE_DATOS', 'giovanni117'),
+        'USER': os.environ.get('USUARIO_BASE_DATOS', 'giovanni117_user'),
+        'PASSWORD': os.environ.get('CONTRASEÑA_BASE_DATOS', 'QtD5Q5LptNc6npc5Een9lcsN1xyu8xGY'),
+        'HOST': os.environ.get('HOST_BASE_DATOS', 'dpg-crpq6al6l47c73anisl0-a.oregon-postgres.render.com'),
+        'PORT': os.environ.get('DATABASE_PORT', '5432'),
     }
 }
+
 
 
 """DATABASES = {
