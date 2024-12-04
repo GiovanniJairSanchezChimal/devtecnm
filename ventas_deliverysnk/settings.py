@@ -89,10 +89,10 @@ WSGI_APPLICATION = 'ventas_deliverysnk.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('NOMBRE_BASE_DATOS', 'giovanni117'),
-        'USER': os.environ.get('USUARIO_BASE_DATOS', 'giovanni117_user'),
-        'PASSWORD': os.environ.get('CONTRASEÑA_BASE_DATOS', 'QtD5Q5LptNc6npc5Een9lcsN1xyu8xGY'),
-        'HOST': os.environ.get('HOST_BASE_DATOS', 'dpg-crpq6al6l47c73anisl0-a.oregon-postgres.render.com'),
+        'NAME': os.environ.get('NOMBRE_BASE_DATOS', 'guivanni117'),
+        'USER': os.environ.get('USUARIO_BASE_DATOS', 'guivanni117_user'),
+        'PASSWORD': os.environ.get('CONTRASEÑA_BASE_DATOS', 'dTCXq2wpsa8x73xKp0x800vC9Va30kCO'),
+        'HOST': os.environ.get('HOST_BASE_DATOS', 'dpg-csknguaj1k6c73bk8pp0-a.oregon-postgres.render.com'),
         'PORT': os.environ.get('DATABASE_PORT', '5432'),
     }
 }
