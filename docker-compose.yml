@@ -1,15 +1,151 @@
 version: '3.8'
 
 services:
+  # Servicio Traefik para manejar los enrutamientos y certificados HTTPS
+  traefik:
+    image: traefik:v2.5
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=your-email@deliverysnksjr.me"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  # Servicio web principal utilizando Gunicorn
   web:
     build: .
     container_name: deliverysnk_container
     command: gunicorn --bind 0.0.0.0:8000 ventas_deliverysnk.wsgi:application
-    ports:
-      - "8000:8000"
+    labels:
+      - "traefik.http.routers.web.rule=Host(`app.deliverysnksjr.me`)"
+      - "traefik.http.routers.web.entrypoints=websecure"
+      - "traefik.http.routers.web.tls.certresolver=myresolver"
     environment:
-      - NOMBRE_BASE_DATOS=giovanni117
-      - USUARIO_BASE_DATOS=giovanni117_user
-      - CONTRASEÑA_BASE_DATOS=QtD5Q5LptNc6npc5Een9lcsN1xyu8xGY
-      - HOST_BASE_DATOS=dpg-crpq6al6l47c73anisl0-a.oregon-postgres.render.com
+      - NOMBRE_BASE_DATOS=dbfinalproject
+      - USUARIO_BASE_DATOS=giovannisanchez
+      - CONTRASEÑA_BASE_DATOS=giovanni117
+      # Configuración de la base de datos para conectarse al servicio db
+      - HOST_BASE_DATOS=db  
       - DATABASE_PORT=5432
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+
+  # Servicio Portainer para la gestión de contenedores
+  portainer:
+    image: portainer/portainer-ce
+    command: -H unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    labels:
+      - "traefik.http.routers.portainer.rule=Host(`portainer.deliverysnksjr.me`)"
+      - "traefik.http.routers.portainer.entrypoints=websecure"
+      - "traefik.http.routers.portainer.tls.certresolver=myresolver"
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+
+  # Servicio Nextcloud para la nube privada
+  nextcloud:
+    image: nextcloud
+    volumes:
+      - nextcloud_data:/var/www/html
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=nextcloud_pass
+    labels:
+      - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.deliverysnksjr.me`)"
+      - "traefik.http.routers.nextcloud.entrypoints=websecure"
+      - "traefik.http.routers.nextcloud.tls.certresolver=myresolver"
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+
+  # Servicio Odoo para ERP
+  odoo:
+    image: odoo
+    environment:
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=odoo_pass
+    labels:
+      - "traefik.http.routers.odoo.rule=Host(`odoo.deliverysnksjr.me`)"
+      - "traefik.http.routers.odoo.entrypoints=websecure"
+      - "traefik.http.routers.odoo.tls.certresolver=myresolver"
+    ports:
+      - "8069:8069"
+    volumes:
+      - odoo_data:/var/lib/odoo
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+
+  # Servicio Netdata para monitoreo
+  netdata:
+    image: netdata/netdata
+    environment:
+      - NETDATA_CLAIM_TOKEN=your_netdata_claim_token
+      - NETDATA_CLAIM_URL=https://app.netdata.cloud
+      - NETDATA_CLAIM_ROOMS=your_netdata_room
+    ports:
+      - "19999:19999"
+    labels:
+      - "traefik.http.routers.netdata.rule=Host(`netdata.deliverysnksjr.me`)"
+      - "traefik.http.routers.netdata.entrypoints=websecure"
+      - "traefik.http.routers.netdata.tls.certresolver=myresolver"
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+
+  # Servicio de base de datos PostgreSQL
+  db:
+    image: postgres:latest
+    environment:
+      # Configuración de la base de datos creada
+      - POSTGRES_DB=dbfinalproject
+      - POSTGRES_USER=giovannisanchez
+      - POSTGRES_PASSWORD=giovanni117
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    deploy:
+      placement:
+        constraints:
+          - node.role == worker
+    networks:
+      - default
+
+# Definición de redes para la comunicación entre servicios
+networks:
+  default:
+    driver: overlay
+
+# Definición de volúmenes para persistencia de datos
+volumes:
+  portainer_data:
+  nextcloud_data:
+  odoo_data:
+  db_data:
